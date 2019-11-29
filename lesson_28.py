@@ -6,7 +6,7 @@ class CustomException(Exception):
         print(text)
 
 
-class AccessDeniedExeption(Exception):
+class AccessDeniedException(Exception):
     def __init__(self, text, *args, **kwargs):
         print(text)
 
@@ -26,7 +26,7 @@ class Users:
 
     def __getattribute__(self, name):
         if name == "_password":
-            raise (AccessDeniedExeption("в доступе отказано"))
+            raise (AccessDeniedException("в доступе отказано"))
         return super(Users, self).__getattribute__(name)
 
     def _set_password(self, passwd):
