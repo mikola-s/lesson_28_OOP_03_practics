@@ -34,10 +34,10 @@ class Users:
         self.__salt = bcrypt.gensalt()
         return bcrypt.hashpw(passwd.encode(), self.__salt)
 
-    def check_password(self, input_str: str) -> bool:
+    def check_password(self, input_str):
         """ проверяет строку на совпадение с паролем """
         check_str = bcrypt.hashpw(input_str.encode(), self.__salt)
-        return check_str == self.__dict__["_password"] if True else False
+        return check_str == self.__dict__["_password"]
 
     # """ короткий вариант проверки телефонов """
     # def __check_phones(self, phones_list) -> list:
@@ -57,14 +57,15 @@ class Users:
 
     def _check_phones_count(self, phones_list):
         """ проверяет количество телефонов """
-        return True if len(phones_list) < 4 else False
+        return len(phones_list) < 4
 
     def _check_phones_length(self, phones_list):
         """ проверяет длинну телефонов """
-        for phone in phones_list:
-            if len(phone) > 15:
-                raise CustomException("Неправильный телефон")
-        return True
+        return all([len(phone) > 15 for phone in phones_list])
+        # for phone in phones_list:
+        #     if len(phone) > 15:
+        #         return False
+        # return True
 
     def _check_addresses(self, addresses) -> dict:
         """ проверяет соответствие адреса шаблону """
